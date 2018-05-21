@@ -34,20 +34,16 @@ Reducer<Text, ProductScoresWritable, Text, Text>{
 		
 		for(Integer year : prodScoreMap.keySet()){
 			List<Integer> scores = prodScoreMap.get(year);
+			Double sum = 0.;
+			Double count = Double.valueOf(scores.size());
+			
+			for (Integer integer : scores) {
+				sum += Double.valueOf(integer);
+			}
 
-			String productAvgScore = year + " " + Double.toString(avg(scores));
+			String productAvgScore = year + " " + String.valueOf(sum/count);
 			context.write(key, new Text(productAvgScore));	
 		}
-	}
-	
-	private double avg(List<Integer> number) {
-		double count = 0;
-		double sum = 0;
-		for (Integer integer : number) {
-			sum += integer;
-			count++;
-		}
-		return (sum/count);
 	}
 
 	//@Override
